@@ -71,17 +71,14 @@ RUN cd /usr/local/trac && htpasswd -bc .htpasswd admin docker-trac1A~
 #RUN trac-admin /var/lib/trac/docker-trac-demo permission add admin TRAC-ADMIN
 
 # Install entrypoint
-ADD entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-#RUN mkdir -p /etc/my_init.d
-#ADD entrypoint.sh /etc/my_init.d/entrypoint.sh
+RUN mkdir -p /etc/my_init.d
+ADD entrypoint.sh /etc/my_init.d/entrypoint.sh
+RUN chmod +x /etc/my_init.d/entrypoint.sh
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 80
-
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
