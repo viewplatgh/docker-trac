@@ -15,6 +15,6 @@ This is to host a Dockerfile to create a linux system running Trac in it
 * Well, some customization maybe needed before build & run. At least, the public key need to be changed to the one you created on your machine
 * Default project name 'docker-trac-demo'and mysql password 'docker-trac1A~' may need to be changed as well
 
-# Contributor 
+## Contributor 
 Rob Lao viewpl{at)gmail{dot)com http://roblao.com
 
