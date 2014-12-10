@@ -56,19 +56,12 @@ RUN mkdir /usr/local/trac
 RUN mkdir /usr/local/trac/docker-trac-demo
 
 # Configure Trac
-# ...
-
+ADD trac.ini /usr/local/trac/trac.ini
 RUN chown -R www-data:www-data /usr/local/trac/docker-trac-demo
-
-# Configure Apache
-# ...
-# 
-
 RUN cd /usr/local/trac && htpasswd -bc .htpasswd admin docker-trac1A~
 
-
-# Assign permission to admin
-#RUN trac-admin /var/lib/trac/docker-trac-demo permission add admin TRAC-ADMIN
+# Configure Apache
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf 
 
 # Install entrypoint
 RUN mkdir -p /etc/my_init.d
