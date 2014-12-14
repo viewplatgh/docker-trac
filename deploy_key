@@ -1,0 +1,4 @@
+This is a dummy key file
+use: 
+ssh-keygen -t rsa -f deploy_key 
+to generate a real one, then use 'deploy_key.pub' in your project git repo server
