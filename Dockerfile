@@ -1,7 +1,6 @@
 # Reference: 
 # http://trac.edgewall.org/wiki/Ubuntu-10.04.03-Git
-# http://github.com/phusion/baseimage-docker 		 
-#FROM stackbrew/ubuntu:trusty
+# http://github.com/phusion/baseimage-docker
 FROM phusion/baseimage:0.9.15
 
 MAINTAINER Rob Lao "viewpl@gmail.com"
@@ -14,9 +13,7 @@ ENV HOME /root
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 # Add public key for ssh service
-ADD key.pub /key.pub
-RUN cat /key.pub >> /root/.ssh/authorized_keys && rm -f /key.pub
-
+ADD key.pub /root/.ssh/authorized_keys 
 
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
@@ -30,24 +27,26 @@ RUN apt-get update
 
 # Install Apache2...
 RUN apt-get install -y apache2 apache2-utils libapache2-mod-python python-setuptools python-genshi
-
+RUN a2enmod python
 RUN a2enmod rewrite
 
 # Install MySQL...
-#RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password password docker-trac1A~'
 RUN echo 'mysql-server mysql-server/root_password password docker-trac1A~' | debconf-set-selections 
-#RUN debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password docker-trac1A~'
 RUN echo 'mysql-server mysql-server/root_password_again password docker-trac1A~' | debconf-set-selections 
 RUN apt-get install -y mysql-server
 ADD my.cnf /root/.my.cnf
 RUN apt-get install -y python-mysqldb
 
+# Install git and Trac
 RUN apt-get install -y git-core
-
 RUN apt-get install -y trac trac-git
 
-# Create git repositories
+# Add deploy key for git repo
+ADD deploy_key /root/.ssh/deploy_key
+
+# Create git repo
 RUN mkdir /usr/local/git
+#Add your own git repo here 
 #RUN git clone https://... /usr/local/git/...
 #RUN chown -R www-data:www-data /usr/loca/git/...
 
