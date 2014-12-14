@@ -28,6 +28,6 @@ trac-admin /usr/local/trac/docker-trac-demo permission add admin TRAC_ADMIN
 # Add git repo need management
 RUN mkdir /usr/local/git
 #git clone git@... /usr/local/git/...
-#chown -R www-data:www-data /usr/local/git/
+chown -R www-data:www-data /usr/local/git
 
 service apache2 restart 
