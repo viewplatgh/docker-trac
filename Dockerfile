@@ -44,12 +44,6 @@ RUN apt-get install -y trac trac-git
 # Add deploy key for git repo
 ADD deploy_key /root/.ssh/deploy_key
 
-# Create git repo
-RUN mkdir /usr/local/git
-#Add your own git repo here 
-#RUN git clone https://... /usr/local/git/...
-#RUN chown -R www-data:www-data /usr/loca/git/...
-
 # Trac
 RUN mkdir /usr/local/trac
 RUN mkdir /usr/local/trac/docker-trac-demo
