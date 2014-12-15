@@ -23,6 +23,8 @@ docker-trac-demo
 mysql://trac:$MYSQLPASS@localhost/trac	
 END
 mv -f /usr/local/trac/trac.ini /usr/local/trac/docker-trac-demo/conf/
+chown -R www-data:www-data /usr/local/trac/docker-trac-demo
+
 trac-admin /usr/local/trac/docker-trac-demo permission add admin TRAC_ADMIN
 
 # Add git repo need management

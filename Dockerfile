@@ -50,7 +50,6 @@ RUN mkdir /usr/local/trac/docker-trac-demo
 
 # Configure Trac
 ADD trac.ini /usr/local/trac/trac.ini
-RUN chown -R www-data:www-data /usr/local/trac/docker-trac-demo
 RUN cd /usr/local/trac && htpasswd -bc .htpasswd admin docker-trac1A~
 
 # Configure Apache
