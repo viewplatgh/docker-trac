@@ -34,7 +34,6 @@ RUN a2enmod rewrite
 RUN echo 'mysql-server mysql-server/root_password password docker-trac1A~' | debconf-set-selections 
 RUN echo 'mysql-server mysql-server/root_password_again password docker-trac1A~' | debconf-set-selections 
 RUN apt-get install -y mysql-server
-ADD my.cnf /root/.my.cnf
 RUN apt-get install -y python-mysqldb
 
 # Install git and Trac
@@ -48,6 +47,9 @@ ADD deploy_key /root/.ssh/deploy_key
 RUN mkdir /usr/local/trac
 RUN mkdir /usr/local/trac/docker-trac-demo
 
+# Configure MySQL
+ADD my.cnf /root/.my.cnf
+
 # Configure Trac
 ADD trac.ini /usr/local/trac/trac.ini
 RUN cd /usr/local/trac && htpasswd -bc .htpasswd admin docker-trac1A~
@@ -56,7 +58,6 @@ RUN cd /usr/local/trac && htpasswd -bc .htpasswd admin docker-trac1A~
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf 
 
 # Install entrypoint
-RUN mkdir -p /etc/my_init.d
 ADD entrypoint.sh /etc/my_init.d/entrypoint.sh
 RUN chmod +x /etc/my_init.d/entrypoint.sh
 
